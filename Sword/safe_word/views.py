@@ -11,7 +11,9 @@ from .forms import *
 def index(request):
     #return render(request, 'safe_word/home.html')
     return render(request, 'index.html')
-
+def home(request):
+    #return render(request, 'safe_word/home.html')
+    return render(request, 'home.html')
 
 
 
