@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+ 
+{% block content %}
+{% load bootstrap %}
+<br><br>
+<div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete created pw</h5>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete  {{ item.title }}  ?</p>
+      </div>
+      <div class="modal-footer">
+        <form action="{% url 'delete' item.id %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-danger"></button>
+          <a href="{% url 'all-page' %}" style="text-decoration:none; padding-left: 1px;"> Cancel</button>
+        </form>  
+        </div>
+</div>
+
+{% endblock %}

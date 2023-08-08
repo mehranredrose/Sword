@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+<div class="alert alert-primary" role="alert" >
+  {% for message in messages %}
+     {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
+<br>
+<form method="POST">
+  {% csrf_token %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Search Password</h1>
+    <br>
+    <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Search Password" aria-label="Search domain PW" aria-describedby="button-addon2" name="password_search">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+      </div>
+  </div>
+  </div>
+</div>
+</form>
+{% if  user_pw %}
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Date</th>
+      <th scope="col">Title</th>
+      <th scope="col">Password</th>
+      <th scope="col">Type</th>
+    </tr>
+  </thead>
+  {% for post in user_pw %}
+    <tbody>
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ post.date }}</td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.password }}</td>
+        <td>{{ post.type }}</td>
+      </tr>
+    </tbody>
+    {% endfor %}
+</table>
+
+{% endif %}
+{% endblock %}
