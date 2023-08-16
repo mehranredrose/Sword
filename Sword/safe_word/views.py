@@ -12,8 +12,9 @@ def index(request):
     #return render(request, 'safe_word/home.html')
     return render(request, 'index.html')
 def home(request):
-    #return render(request, 'safe_word/home.html')
-    return render(request, 'home.html')
+    if request.user.is_authenticated:
+        logged_in_user = request.user  
+    return render(request, 'home.html',{'user': logged_in_user})
 
 
 
