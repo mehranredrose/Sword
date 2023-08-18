@@ -124,11 +124,11 @@ def add_password(request):
         password = form.cleaned_data.get("password")
         type = form.cleaned_data.get("type")
         if UserSW.objects.filter(title=title) and UserSW.objects.filter(user=request.user):
-            messages.success(request, "---There is already a pw created by that name---")
+            messages.success(request, "---There is already a password created by that name---")
         else:
             try:
                 UserSW.objects.create(title=title, password=password, type=type, user=logged_in_user)
-                messages.success(request, "---Successfully added new pw field for your storage---")
+                messages.success(request, "---Successfully added new password field for your storage---")
             except Exception as e:
                 raise e
             
