@@ -82,7 +82,7 @@ class LoginForm(forms.Form):
         return username
     
 class UserSWForm(forms.Form):
-    PW_TYPES = [('confidential', 'c'),('sharable', 's')]
+    PW_TYPES = [('c', 'confidential'),('s', 'sharable')]
     title = forms.CharField(widget=forms.TextInput(
         attrs={
         "class": "form-control"

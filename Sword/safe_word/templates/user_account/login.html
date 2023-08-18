@@ -3,12 +3,11 @@
 {% block content %}
 
 {% if messages %}
-<div class="alert alert-primary" role="alert" >
   {% for message in messages %}
-     {{ message }}
-    {% endfor %}
-</div>
-<br>
+  <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+    <span class="font-medium">{{ message }}</span>
+  </div>
+  {% endfor %}
 {% endif %}
 
 <div class="mx-auto max-w-lg">
