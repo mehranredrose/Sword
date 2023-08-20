@@ -155,7 +155,7 @@ def search_passwords(request):
     return render(request, "user_password/search_passwords.html", {'pws': logged_in_user_pws})
 
 
-
+@login_required(login_url=login_page)
 def generate(request):
     
     try:    
