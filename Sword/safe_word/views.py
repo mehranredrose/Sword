@@ -181,6 +181,6 @@ def generate(request):
             the_password += random.choice(characters)
     except:
         the_password = None
+        massage='You Should Select Option First'
 
-
-    return render(request, 'user_password/password_generator.html', {'password': the_password})
+    return render(request, 'user_password/password_generator.html', {'password': the_password,'massage': massage})
