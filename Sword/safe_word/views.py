@@ -179,6 +179,7 @@ def generate(request):
         
         for x in range(length):
             the_password += random.choice(characters)
+        massage=None
     except:
         the_password = None
         massage='You Should Select Option First'
