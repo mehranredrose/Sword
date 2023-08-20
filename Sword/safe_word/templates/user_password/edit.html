@@ -1,7 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'home.html' %}
 
 {% block content %}
-{% load bootstrap %}
 {% if messages %}
 <div class="alert alert-primary" role="alert" >
   {% for message in messages %}
@@ -9,21 +8,23 @@
     {% endfor %}
 </div>
 {% endif %}
+<div class="mx-auto max-w-lg">
 <br>
 <h1>Edit</h1>
 <br>
 <div class="form-control">
 <form method='POST'>
       {% csrf_token %}
-        {% for field in form %}
-        <br>
-        <br>
-        {{ field }}
+      <fieldset class="block mb-6 text-sm font-medium text-gray-900 dark:text-white">
+      {% for field in form %}
+
+        {{ field }}      
+      
         {% endfor %}
-  
-  <br>
-  <br>
-        <button class="btn btn-primary" type='submit'>Update</button>
+      </fieldset>
+
+  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
 </form>
+</div>
 </div>
 {% endblock %}
