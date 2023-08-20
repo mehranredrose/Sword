@@ -17,9 +17,6 @@ def home(request):
         logged_in_user = request.user  
     return render(request, 'home.html',{'user': logged_in_user})
 
-def generate(request):
-    #return render(request, 'safe_word/home.html')
-    return render(request, 'user_password/password_generator.html')
 
 def register_page(request):
     #Use the Registration form from forms.py
@@ -158,10 +155,8 @@ def search_passwords(request):
     return render(request, "user_password/search_passwords.html", {'pws': logged_in_user_pws})
 
 
-#def index(request):
-    #return render(request, 'index.html')
 
-def password(request):
+def generate(request):
     
     try:    
         characters = list()
@@ -185,7 +180,7 @@ def password(request):
         for x in range(length):
             the_password += random.choice(characters)
     except:
-        the_password = 'ERROR: Select an option to generate password'
+        the_password = None
 
 
-    return render(request, 'user_password/password.html', {'password': the_password})
+    return render(request, 'user_password/password_generator.html', {'password': the_password})
