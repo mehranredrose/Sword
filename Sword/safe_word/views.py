@@ -92,7 +92,7 @@ def edit_post(request, pk):
         form =UserUpdateForm(request.POST, instance=user_post)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect(all_passwords)
     
     context = {'form': form}
 
@@ -106,7 +106,7 @@ def delete(request, pk):
     
     if request.method == 'POST':
         user_post.delete()
-        return redirect('/')
+        return redirect(all_passwords)
     
     context = {'item': user_post} 
 
@@ -129,6 +129,7 @@ def add_password(request):
             try:
                 UserSW.objects.create(title=title, password=password, type=type, user=logged_in_user)
                 messages.success(request, "---Successfully added new password field for your storage---")
+                return redirect(all_passwords)
             except Exception as e:
                 raise e
             
