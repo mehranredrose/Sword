@@ -6,6 +6,7 @@ from .models import User ,UserSW
 from django.db.models import Q
 #from .templates.forms import *
 from .forms import *
+import random
 
 #render home screen as default
 def index(request):
@@ -179,12 +180,12 @@ def password(request):
 
         length = int(request.GET.get('length', 14))
 
-        thepassword = ''
+        the_password = ''
         
         for x in range(length):
-            thepassword += random.choice(characters)
+            the_password += random.choice(characters)
     except:
-        thepassword = 'ERROR: Select an option to generate password'
+        the_password = 'ERROR: Select an option to generate password'
 
 
-    return render(request, 'user_password/password.html', {'password': thepassword})
+    return render(request, 'user_password/password.html', {'password': the_password})
