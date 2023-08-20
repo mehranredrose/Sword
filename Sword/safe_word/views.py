@@ -16,7 +16,9 @@ def home(request):
         logged_in_user = request.user  
     return render(request, 'home.html',{'user': logged_in_user})
 
-
+def generate(request):
+    #return render(request, 'safe_word/home.html')
+    return render(request, 'user_password/password_generator.html')
 
 def register_page(request):
     #Use the Registration form from forms.py
@@ -157,3 +159,32 @@ def search_passwords(request):
 
 #def index(request):
     #return render(request, 'index.html')
+
+def password(request):
+    
+    try:    
+        characters = list()
+
+        if request.GET.get('uppercase'):
+            characters.extend(list('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+        
+        if request.GET.get('lowercase'):
+            characters.extend(list('abcefghijklmnopqrstuvwxyz'))    
+
+        if request.GET.get('special'):
+            characters.extend(list('~!@#$%^&*()_+="\/|?><.:;'))
+        
+        if request.GET.get('numbers'):
+            characters.extend(list('0123456789'))
+
+        length = int(request.GET.get('length', 14))
+
+        thepassword = ''
+        
+        for x in range(length):
+            thepassword += random.choice(characters)
+    except:
+        thepassword = 'ERROR: Select an option to generate password'
+
+
+    return render(request, 'user_password/password.html', {'password': thepassword})
