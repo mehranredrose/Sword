@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class UserSW(models.Model):
-    PW_TYPES = [('confidential', 'c'),('sharable', 's')]
+    PW_TYPES = [('confidential', 'confidential'),('sharable', 'sharable')]
     title = models.CharField(max_length=100)
     password = models.CharField(max_length=50)
     date = models.DateTimeField(auto_now_add=True)
