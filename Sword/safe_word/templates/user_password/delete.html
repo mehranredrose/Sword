@@ -6,8 +6,8 @@
 <div class="mx-auto w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
   
   <div class="mt-6 flex flex-col items-center pb-10">
-      <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Are you sure you want to delete  {{ item.title }}  ?</h5>
-      <span class="text-sm text-gray-500 dark:text-gray-400">Visual Designer</span>
+      <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Are you sure you want to delete :</h5>
+      <span class="text-lg text-gray-500 dark:text-gray-400">{{ item.title }}</span>
       <div class="flex mt-4 space-x-3 md:mt-6">
         <form action="{% url 'delete' item.id %}" method="POST">
           {% csrf_token %}
