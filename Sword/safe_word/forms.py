@@ -7,14 +7,22 @@ non_allowed_usernames = ['abc']
 #The class will store all the required input fields
 class RegisterForm(forms.Form):
 
-    username = forms.CharField()
-    email = forms.EmailField()
+    username = forms.CharField(widget=forms.TextInput(
+            attrs={
+                "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            }
+        ))
+    email = forms.EmailField(widget=forms.EmailInput(
+            attrs={
+                "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            }
+        ))
     password1 = forms.CharField(
         label='Password',
       #The widget handles the rendering of the HTML
         widget=forms.PasswordInput(
             attrs={
-                "id": "user-password"
+                "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             }
         )
     )
@@ -22,7 +30,7 @@ class RegisterForm(forms.Form):
         label='Confirm Password',
         widget=forms.PasswordInput(
             attrs={
-                "id": "user-confirm-password"
+                "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             }
         )
     )
