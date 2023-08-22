@@ -86,13 +86,16 @@ class UserSWForm(forms.Form):
     PW_TYPES = [('confidential', 'confidential'),('sharable', 'sharable')]
     title = forms.CharField(widget=forms.TextInput(
         attrs={
-        "class": "form-control"
+        "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
     }))
     password = forms.CharField(widget=forms.TextInput(
         attrs={
-        "class": "form-control"
+        "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
     }))
-    type = forms.ChoiceField(choices=PW_TYPES, widget=forms.RadioSelect())
+    type = forms.ChoiceField(choices=PW_TYPES, widget=forms.RadioSelect(
+        attrs={
+        "class": "grid mt-2 gap-x-[2.75rem] md:grid-cols-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+    }))
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
