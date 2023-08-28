@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 
-User = get_user_model()
+class CustomUser(AbstractUser):
+    email = models.EmailField(unique=True)
 
 class UserSW(models.Model):
     PW_TYPES = [('confidential', 'confidential'),('sharable', 'sharable')]
