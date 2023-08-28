@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import User ,UserSW
+from .models import UserSW, CustomUser
 from django.db.models import Q
 #from .templates.forms import *
 from .forms import *
@@ -30,7 +30,7 @@ def register_page(request):
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password1")
         try:
-            user = User.objects.create_user(username, email, password)
+            user = CustomUser.objects.create_user(username, email, password)
         except:
             user = None
         if user != None:
