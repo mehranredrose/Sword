@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 AUTH_USER_MODEL = 'safe_word.CustomUser'
-AUTHENTICATION_BACKENDS = ['safe_word.backends.EmailBackend']
+AUTHENTICATION_BACKENDS = ['safe_word.backend.EmailBackend']
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 

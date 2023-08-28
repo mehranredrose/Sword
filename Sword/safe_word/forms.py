@@ -45,8 +45,7 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError("Your passwords do not match")
         return password2
 
-    
-    def clean_username(self):
+    '''def clean_username(self):
         username = self.cleaned_data.get("username")
         #The qs checks if input username matches exactly the User that is already 
         qs = CustomUser.objects.filter(username__iexact=username)
@@ -54,7 +53,8 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError("This is an invalid username, please pick another.")
         if qs.exists():
             raise forms.ValidationError("This is an invalid username, please pick another.")
-        return username
+        return username'''
+    
     
     def clean_email(self):
         email = self.cleaned_data.get("email")
@@ -85,8 +85,8 @@ class LoginForm(forms.Form):
         qs = CustomUser.objects.filter(email__iexact=email) # thisIsMyEmail == thisismyemail
         if not qs.exists():
             raise forms.ValidationError("This is an invalid Email.")
-        if qs.count() != 1:
-            raise forms.ValidationError("This is an invalid Email.")
+        #if qs.count() != 1:
+        #    raise forms.ValidationError("This is an invalid Email.")
         return email
     
 class UserSWForm(forms.Form):
