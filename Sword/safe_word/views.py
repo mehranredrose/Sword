@@ -186,3 +186,7 @@ def generate(request):
         massage='You Should Select Option First'
 
     return render(request, 'user_password/password_generator.html', {'password': the_password,'massage': massage})
+
+def about(request):
+    #return render(request, 'safe_word/home.html')
+    return render(request, 'about.html')
