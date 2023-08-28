@@ -46,11 +46,11 @@ def login_page(request):
     form = LoginForm(request.POST or None)
     if request.user.is_authenticated:
         messages.success(request, "You are already logged in as %s" % request.user + " you can't register or login ones already logged in!")
-        return redirect(index)
+        return redirect(all_passwords)
     if form.is_valid():
-        username = form.cleaned_data.get("username")
+        email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
         if user != None:
             login(request, user)
             return redirect(all_passwords)
