@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import TextInput, Select
-from .models import User
+from .models import CustomUser
 from .models import UserSW
 non_allowed_usernames = ['abc']
 
@@ -49,7 +49,7 @@ class RegisterForm(forms.Form):
     def clean_username(self):
         username = self.cleaned_data.get("username")
         #The qs checks if input username matches exactly the User that is already 
-        qs = User.objects.filter(username__iexact=username)
+        qs = CustomUser.objects.filter(username__iexact=username)
         if username in non_allowed_usernames:
             raise forms.ValidationError("This is an invalid username, please pick another.")
         if qs.exists():
@@ -59,7 +59,7 @@ class RegisterForm(forms.Form):
     def clean_email(self):
         email = self.cleaned_data.get("email")
         #Email check
-        qs = User.objects.filter(email__iexact=email)
+        qs = CustomUser.objects.filter(email__iexact=email)
         if qs.exists():
             raise forms.ValidationError("This email is already in use.")
         return email
@@ -82,7 +82,7 @@ class LoginForm(forms.Form):
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
-        qs = User.objects.filter(username__iexact=username) # thisIsMyUsername == thisismyusername
+        qs = CustomUser.objects.filter(username__iexact=username) # thisIsMyUsername == thisismyusername
         if not qs.exists():
             raise forms.ValidationError("This is an invalid user.")
         if qs.count() != 1:
