@@ -45,7 +45,7 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError("Your passwords do not match")
         return password2
 
-    '''def clean_username(self):
+    def clean_username(self):
         username = self.cleaned_data.get("username")
         #The qs checks if input username matches exactly the User that is already 
         qs = CustomUser.objects.filter(username__iexact=username)
@@ -53,7 +53,7 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError("This is an invalid username, please pick another.")
         if qs.exists():
             raise forms.ValidationError("This is an invalid username, please pick another.")
-        return username'''
+        return username
     
     
     def clean_email(self):
@@ -67,7 +67,7 @@ class RegisterForm(forms.Form):
 
 
 class LoginForm(forms.Form):
-    email = forms.CharField(required=True, widget=forms.EmailInput(
+    email = forms.EmailField(required=True, widget=forms.EmailInput(
         attrs={
         "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
     }))
@@ -78,15 +78,14 @@ class LoginForm(forms.Form):
             }
         )
     )
-
-
+    
     def clean_email(self):
         email = self.cleaned_data.get("email")
         qs = CustomUser.objects.filter(email__iexact=email) # thisIsMyEmail == thisismyemail
         if not qs.exists():
             raise forms.ValidationError("This is an invalid Email.")
-        #if qs.count() != 1:
-        #    raise forms.ValidationError("This is an invalid Email.")
+        if qs.count() != 1:
+            raise forms.ValidationError("This is an invalid Email.")
         return email
     
 class UserSWForm(forms.Form):

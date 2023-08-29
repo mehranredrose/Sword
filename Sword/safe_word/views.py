@@ -56,7 +56,6 @@ def login_page(request):
             return redirect(all_passwords)
         else:
             messages.warning(request, 'Please enter the right password!')
-    #return render(request, "safe_word/user_account/login.html", {"form": form})
     return render(request, "user_account/login.html", {"form": form})
 
   
