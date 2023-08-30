@@ -49,7 +49,7 @@ def login_page(request):
         return redirect(all_passwords)
     if form.is_valid():
         email = form.cleaned_data.get("email")
-        password = form.cleaned_data.get("password")
+        password = form.cleaned_data.get("password1")
         user = authenticate(request, email=email, password=password)
         if user != None:
             login(request, user)
