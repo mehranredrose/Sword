@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -6,6 +7,7 @@ from .models import UserSW, CustomUser
 from django.db.models import Q
 #from .templates.forms import *
 from .forms import *
+from safe_word.forms import CustomLoginForm
 import random
 
 #render home screen as default
@@ -34,6 +36,7 @@ def register_page(request):
         except:
             user = None
         if user != None:
+            user.backend = 'safe_word.backend.EmailBackend'  # Set the backend attribute
             login(request, user)
             return redirect(all_passwords)
         else:
@@ -42,32 +45,32 @@ def register_page(request):
     return render(request, "user_account/register.html", {"form": form})
 
 
-def login_page(request):
-    form = LoginForm(request.POST or None)
-    if request.user.is_authenticated:
-        messages.success(request, "You are already logged in as %s" % request.user + " you can't register or login ones already logged in!")
-        return redirect(all_passwords)
-    if form.is_valid():
-        email = form.cleaned_data.get("email")
-        password = form.cleaned_data.get("password1")
-        user = authenticate(request, email=email, password=password)
-        if user != None:
-            login(request, user)
-            return redirect(all_passwords)
+
+class CustomLoginView(LoginView):
+    template_name = 'user_account/login.html'
+    authentication_form = CustomLoginForm
+
+    def form_valid(self, form):
+        username = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password')
+        user = authenticate(self.request, email=username, password=password, backend='safe_word.backend.EmailBackend')
+        if user is not None:
+            login(self.request, user)
+            return redirect('user_pw_all')
         else:
-            messages.warning(request, 'Please enter the right password!')
-    return render(request, "user_account/login.html", {"form": form})
+            messages.warning(self.request, 'Please enter the right password!')
+            return self.form_invalid(form)
 
   
 #The @login_required decorator checks if user is logged in otherwise you can't access the logout page.
-@login_required(login_url=login_page)
+@login_required(login_url=CustomLoginView)
 def logged_out_page(request):
     logout(request)
     #return render(request, "safe_word/user_account/logged_out.html")
     return render(request, "user_account/logged_out.html")
 
 
-@login_required(login_url=login_page)
+@login_required(login_url=CustomLoginView)
 def all_passwords(request):
     if request.user.is_authenticated:
         messages.success(request, "Logged in as %s" % request.user)
@@ -112,7 +115,7 @@ def delete(request, pk):
     #return render(request, 'safe_word/user_password/delete.html', context)
     return render(request, 'user_password/delete.html', context)
 
-@login_required(login_url=login_page)
+@login_required(login_url=CustomLoginView)
 def add_password(request):
     form = UserSWForm(request.POST or None)
     if request.user.is_authenticated:
@@ -135,7 +138,7 @@ def add_password(request):
     #return render(request, "safe_word/user_password/user_pw_add.html", {'form': form})
     return render(request, "user_password/add_password.html", {'form': form})
  
-@login_required(login_url=login_page)
+@login_required(login_url=CustomLoginView)
 def search_passwords(request):
     if request.user.is_authenticated:
         messages.success(request, "Logged in as %s" % request.user)
@@ -155,7 +158,7 @@ def search_passwords(request):
     return render(request, "user_password/search_passwords.html", {'pws': logged_in_user_pws})
 
 
-@login_required(login_url=login_page)
+@login_required(login_url=CustomLoginView)
 def generate(request):
     
     try:    
