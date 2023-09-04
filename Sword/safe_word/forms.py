@@ -3,6 +3,7 @@ from django.forms import TextInput, Select
 from .models import CustomUser
 from .models import UserSW
 non_allowed_usernames = ['abc']
+from django.contrib.auth.forms import AuthenticationForm
 
 #The class will store all the required input fields
 class RegisterForm(forms.Form):
@@ -65,32 +66,41 @@ class RegisterForm(forms.Form):
         return email
 
 
+class CustomLoginForm(AuthenticationForm):
+    email = forms.EmailField(label='Email', widget=forms.EmailInput(
+        attrs={
+            "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        }
+    ))
 
-class LoginForm(forms.Form):
-    # email = forms.EmailField(required=True, widget=forms.EmailInput(
-    #     attrs={
-    #     "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-    # }))
-    username = forms.CharField(required=True, widget=forms.TextInput(
-         attrs={
-         "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-     }))
-    password = forms.CharField(required=True,
-        widget=forms.PasswordInput(
-            attrs={
-                "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            }
-        )
-    )
-    
-    def clean_email(self):
-        email = self.cleaned_data.get("email")
-        qs = CustomUser.objects.filter(email__iexact=email) # thisIsMyEmail == thisismyemail
+    def clean_username(self):
+        email = self.cleaned_data.get('email')
+        qs = CustomUser.objects.filter(email__iexact=email)
         if not qs.exists():
-            raise forms.ValidationError("This is an invalid Email.")
-        if qs.count() != 1:
-            raise forms.ValidationError("This is an invalid Email.")
+            raise forms.ValidationError("This is an invalid email.")
         return email
+    
+# class LoginForm(forms.Form):
+#     email = forms.EmailField(required=True, widget=forms.EmailInput(
+#          attrs={
+#          "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+#      }))
+#     password = forms.CharField(required=True,
+#         widget=forms.PasswordInput(
+#             attrs={
+#                 "class": "mb-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+#             }
+#         )
+#     )
+    
+#     def clean_email(self):
+#         email = self.cleaned_data.get("email")
+#         qs = CustomUser.objects.filter(email__iexact=email) # thisIsMyEmail == thisismyemail
+#         if not qs.exists():
+#             raise forms.ValidationError("This is an invalid Email.")
+#         if qs.count() != 1:
+#             raise forms.ValidationError("This is an invalid Email.")
+#         return email
     
 class UserSWForm(forms.Form):
     PW_TYPES = [('confidential', 'confidential'),('sharable', 'sharable')]
