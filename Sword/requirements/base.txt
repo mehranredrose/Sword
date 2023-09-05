@@ -1,0 +1,4 @@
+# Django
+# ------------------------------------------------------------------------------
+django~=4.2.4  # https://www.djangoproject.com/
+django-compressor~=4.4
