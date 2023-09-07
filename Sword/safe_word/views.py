@@ -51,12 +51,12 @@ class CustomLoginView(LoginView):
     authentication_form = CustomLoginForm
 
     def form_valid(self, form):
-        username = form.cleaned_data.get('email')
+        username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
         user = authenticate(self.request, email=username, password=password, backend='safe_word.backend.EmailBackend')
         if user is not None:
             login(self.request, user)
-            return redirect('user_pw_all')
+            return redirect(all_passwords)
         else:
             messages.warning(self.request, 'Please enter the right password!')
             return self.form_invalid(form)

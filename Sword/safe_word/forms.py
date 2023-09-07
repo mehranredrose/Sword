@@ -78,7 +78,7 @@ class CustomLoginForm(AuthenticationForm):
         }
     ))
 
-    def clean_username(self):
+    def clean_email(self):
         email = self.cleaned_data.get('email')
         qs = CustomUser.objects.filter(email__iexact=email)
         if not qs.exists():
